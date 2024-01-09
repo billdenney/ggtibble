@@ -1,0 +1,25 @@
+Package: ggtibble
+Title: Create Tibbles and Lists of ggplot Figures
+Version: 0.0.0.9000
+Authors@R: 
+    person("Bill", "Denney", email="wdenney@humanpredictions.com", role=c("aut", "cre"), comment=c(ORCID="0000-0002-5759-428X"))
+Description:
+  Create tibbles and lists of ggplot figures that can be modified as easily as
+  regular ggplot figures.  Typical use cases are for creating reports where many
+  figures with similar formatting.
+License: GPL (>= 3)
+Encoding: UTF-8
+Roxygen: list(markdown = TRUE)
+RoxygenNote: 7.2.3
+Suggests: 
+    testthat (>= 3.0.0)
+Config/testthat/edition: 3
+Imports: 
+    dplyr,
+    ggplot2,
+    glue,
+    knitr,
+    rlang,
+    tibble,
+    tidyr,
+    vctrs
