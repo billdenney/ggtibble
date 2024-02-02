@@ -14,14 +14,24 @@
 \item{filename}{A filename with an optional "\%d" sprintf pattern for saving
 the plots}
 
-\item{fig_suffix}{Any text to add after the figure (often
-"\n\n\\FloatBarrier\n\n")}
+\item{fig_suffix}{Any text to add after the figure}
 }
 \value{
 The list, invisibly
 }
 \description{
 Print a list of plots made by gglist
+}
+\examples{
+# Ensure that each figure is within its own float area
+mydata <-
+  list(
+    data.frame(x = 1:3, y = 3:1),
+    data.frame(x = 4:7, y = 7:4)
+  )
+p <- gglist(mydata, ggplot2::aes(x = x, y = y)) +
+  ggplot2::geom_point()
+knit_print(p, fig_suffix = "\n\n\\\\FloatBarrier\n\n")
 }
 \seealso{
 Other knitters: 

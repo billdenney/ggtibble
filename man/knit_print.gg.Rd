@@ -22,8 +22,7 @@
 
 \item{fig_prefix}{Text to \code{cat()} before the figure is printed}
 
-\item{fig_suffix}{Any text to add after the figure (often
-"\n\n\\FloatBarrier\n\n")}
+\item{fig_suffix}{Any text to add after the figure}
 
 \item{filename}{A filename saving the plot}
 
