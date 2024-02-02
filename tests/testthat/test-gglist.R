@@ -44,6 +44,29 @@ test_that("vec_arith for gglists", {
       ),
     1
   )
+  # Add two gglists together ####
+  g1 <- new_gglist(list(ggplot2::ggplot(environment = emptyenv())))
+  g2 <- new_gglist(list(ggplot2::ggplot(environment = emptyenv())))
+  expect_error(g1 + g2) # Can't add two ggplots to each other
+  # Can add one element to one element
+  g1 <- new_gglist(list(ggplot2::ggplot(environment = emptyenv())))
+  g2 <- new_gglist(list(ggplot2::geom_point()))
+  expect_length(g1 + g2, 1)
+  # Can't add two elements to one element
+  g1 <- new_gglist(list(ggplot2::ggplot(environment = emptyenv())))
+  g2 <- new_gglist(list(ggplot2::geom_point(), ggplot2::geom_line()))
+  expect_error(g1 + g2)
+  # Can add two element to two elements
+  g1 <- new_gglist(list(ggplot2::ggplot(environment = emptyenv()), ggplot2::ggplot(environment = emptyenv())))
+  g2 <- new_gglist(list(ggplot2::geom_point(), ggplot2::geom_line()))
+  added <- g1 + g2
+  expect_length(added, 2)
+  expect_s3_class(added[[1]]$layers[[1]]$geom, "GeomPoint")
+  expect_s3_class(added[[2]]$layers[[1]]$geom, "GeomLine")
+  # Can add one element to two elements
+  g1 <- new_gglist(list(ggplot2::ggplot(environment = emptyenv()), ggplot2::ggplot(environment = emptyenv())))
+  g2 <- new_gglist(list(ggplot2::geom_point()))
+  expect_length(g1 + g2, 2)
 })
 
 # new_gglist ####
