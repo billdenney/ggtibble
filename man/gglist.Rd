@@ -34,6 +34,6 @@ mydata <-
     data.frame(x = 1:3, y = 3:1),
     data.frame(x = 4:7, y = 7:4)
   )
-gglist(mydata, ggplot2::aes(x = x, y = y)) \%l+\%
+gglist(mydata, ggplot2::aes(x = x, y = y)) +
   ggplot2::geom_point()
 }

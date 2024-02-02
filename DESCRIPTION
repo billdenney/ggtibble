@@ -20,6 +20,7 @@ Imports:
     ggplot2,
     glue,
     knitr,
+    purrr,
     rlang,
     tibble,
     tidyr,

@@ -4,7 +4,7 @@
 \alias{knit_print.gg}
 \title{Print a ggplot (usually within knit_print.gglist)}
 \usage{
-knit_print.gg(
+\method{knit_print}{gg}(
   x,
   ...,
   fig_prefix,

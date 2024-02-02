@@ -9,7 +9,7 @@
 #'     data.frame(x = 1:3, y = 3:1),
 #'     data.frame(x = 4:7, y = 7:4)
 #'   )
-#' gglist(mydata, ggplot2::aes(x = x, y = y)) %l+%
+#' gglist(mydata, ggplot2::aes(x = x, y = y)) +
 #'   ggplot2::geom_point()
 #' @export
 gglist <- function(data = NULL, mapping = ggplot2::aes(), ..., environment = parent.frame()) {
@@ -65,6 +65,7 @@ vec_arith.gglist <- function(op, x, y, ...) {
 #' @method vec_arith.gglist gglist
 vec_arith.gglist.gglist <- function(op, x, y, ...) {
   stopifnot(op == "+")
+  stopifnot(length(y) %in% c(1, length(x)))
   new_gglist(
     mapply(FUN = "+", x, y, ..., SIMPLIFY = FALSE)
   )
@@ -73,9 +74,12 @@ vec_arith.gglist.gglist <- function(op, x, y, ...) {
 #' @method vec_arith.gglist list
 vec_arith.gglist.list <- function(op, x, y, ...) {
   stopifnot(op == "+")
-  new_gglist(
-    mapply(FUN = "+", x, y, ..., SIMPLIFY = FALSE)
-  )
+  ret <- x
+  for (idx in seq_along(ret)) {
+    # Add the entire list to each gglist object
+    ret[[idx]] <- ret[[idx]] + y
+  }
+  new_gglist(ret)
 }
 #' @export
 #' @method vec_arith.gglist gg

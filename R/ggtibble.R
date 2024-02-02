@@ -20,16 +20,42 @@ ggtibble <- function(data, ...) {
 #' @describeIn ggtibble The default method for a data.frame or tibble
 #' @inheritParams ggplot2::ggplot
 #' @param outercols The columns to have outside the nesting
-#' @param captionglue The glue specification for creating the caption
+#' @param caption The glue specification for creating the caption
 #' @param labs Labels to add via `labs_glue()`
+#' @returns A `ggtibble` object which is a tibble with columns named "figure"
+#'   which is a `gglist` object (a list of ggplots), "data_plot" which is the a
+#'   list of data.frames making up the source data used for each individual
+#'   plot, "caption" which is the text to use for the plot caption, and all of
+#'   the `outercols` used for nesting.
+#' @examples
+#' d_plot <-
+#'   data.frame(
+#'     A = rep(c("foo", "bar"), each = 4),
+#'     B = 1:8,
+#'     C = 11:18,
+#'     Bunit = "mg",
+#'     Cunit = "km"
+#'   )
+#' all_plots <-
+#'   ggtibble(
+#'     d_plot,
+#'     ggplot2::aes(x = B, y = C),
+#'     outercols = c("A", "Bunit", "Cunit"),
+#'     caption = "All the {A}",
+#'     labs = list(x = "B ({Bunit})", y = "C ({Cunit})")
+#'   ) +
+#'   ggplot2::geom_point() +
+#'   ggplot2::geom_line()
+#' knit_print(all_plots)
+#'
 #' @export
-ggtibble.data.frame <- function(data, mapping = ggplot2::aes(), ..., outercols = group_vars(data), labs = list(), captionglue = "") {
+ggtibble.data.frame <- function(data, mapping = ggplot2::aes(), ..., outercols = group_vars(data), labs = list(), caption = "") {
   if (!tibble::is_tibble(data)) {
     data <- tibble::as_tibble(as.data.frame(data))
   }
-  d_plot <- tidyr::nest(.data = data, data_plot = !outercols)
+  d_plot <- tidyr::nest(.data = data, data_plot = !tidyr::all_of(outercols))
   d_plot$figure <- gglist(data = d_plot$data_plot, mapping = mapping, ...)
-  d_plot$caption <- glue::glue_data(d_plot, captionglue)
+  d_plot$caption <- glue::glue_data(d_plot, caption)
   class(d_plot) <- c("ggtibble", class(d_plot))
   if (length(labs) > 0) {
     d_plot$figure <- d_plot$figure + do.call(what = labs_glue, append(list(p = d_plot), labs))

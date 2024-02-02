@@ -14,7 +14,7 @@ ggtibble(data, ...)
   ...,
   outercols = group_vars(data),
   labs = list(),
-  captionglue = ""
+  caption = ""
 )
 }
 \arguments{
@@ -29,10 +29,16 @@ If not specified, must be supplied in each layer added to the plot.}
 
 \item{labs}{Labels to add via \code{labs_glue()}}
 
-\item{captionglue}{The glue specification for creating the caption}
+\item{caption}{The glue specification for creating the caption}
 }
 \value{
 A data.frame with a column named "data_plot" with the data to plot, "figure" with the gglist, and "caption" with the captions
+
+A \code{ggtibble} object which is a tibble with columns named "figure"
+which is a \code{gglist} object (a list of ggplots), "data_plot" which is the a
+list of data.frames making up the source data used for each individual
+plot, "caption" which is the text to use for the plot caption, and all of
+the \code{outercols} used for nesting.
 }
 \description{
 Make a tibble where one column is the data to plot, one is the gglist, and
@@ -43,3 +49,25 @@ one is the caption
 \item \code{ggtibble(data.frame)}: The default method for a data.frame or tibble
 
 }}
+\examples{
+d_plot <-
+  data.frame(
+    A = rep(c("foo", "bar"), each = 4),
+    B = 1:8,
+    C = 11:18,
+    Bunit = "mg",
+    Cunit = "km"
+  )
+all_plots <-
+  ggtibble(
+    d_plot,
+    ggplot2::aes(x = B, y = C),
+    outercols = c("A", "Bunit", "Cunit"),
+    caption = "All the {A}",
+    labs = list(x = "B ({Bunit})", y = "C ({Cunit})")
+  ) +
+  ggplot2::geom_point() +
+  ggplot2::geom_line()
+knit_print(all_plots)
+
+}

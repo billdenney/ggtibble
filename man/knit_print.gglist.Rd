@@ -4,7 +4,7 @@
 \alias{knit_print.gglist}
 \title{Print a list of plots made by gglist}
 \usage{
-knit_print.gglist(x, ..., filename = NULL, fig_suffix = "\\n\\n")
+\method{knit_print}{gglist}(x, ..., filename = NULL, fig_suffix = "\\n\\n")
 }
 \arguments{
 \item{x}{The gglist object}
