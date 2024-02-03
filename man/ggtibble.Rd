@@ -69,5 +69,4 @@ all_plots <-
   ggplot2::geom_point() +
   ggplot2::geom_line()
 knit_print(all_plots)
-
 }

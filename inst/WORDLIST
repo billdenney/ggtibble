@@ -1,6 +1,7 @@
 CMD
 Codecov
 Tibbles
+geoms
 gg
 gglist
 ggplot

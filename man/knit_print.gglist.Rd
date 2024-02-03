@@ -23,7 +23,13 @@ the plots}
 The list, invisibly
 }
 \description{
-Print a list of plots made by gglist
+The \code{filename} argument may be given with an \code{sprintf()} format including
+"\%d" to allow automatic numbering of the output filenames.  Specifically, the
+pattern of "\%d" with an optional non-negative integer between the "\%" and "d"
+is searched for and if found, then the filename will be generated using that
+\code{sprintf()} format.  Note that also means that other requirements for
+\code{sprintf()} must be met; for example, if you want a percent sign ("\%") in the
+filename, it must be doubled so that sprintf returns what is desired.
 }
 \section{Functions}{
 \itemize{
