@@ -103,3 +103,12 @@ test_that("knit_print.gg", {
   expect_output(knit_print(p, fig_prefix = "prefix"), "prefix")
   expect_output(knit_print(p, fig_suffix = "suffix"), "suffix")
 })
+
+# Trivial tests for 100% coverage ####
+
+test_that("gglist trivial", {
+  p <- gglist(list(data.frame(A = 1), data.frame(A = 2)))
+  expect_equal(vec_ptype_abbr.gglist(p), "gglst")
+  expect_equal(format(p), rep("A ggplot object", 2))
+  expect_invisible(print(p))
+})
