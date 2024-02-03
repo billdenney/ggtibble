@@ -66,3 +66,55 @@ test_that("ggtibble", {
   expect_equal(v4$figure[[1]]$layers, list())
   expect_s3_class(v5$figure[[1]]$layers[[1]]$geom, "GeomPoint")
 })
+
+test_that("knit_print.ggtibble", {
+  d_plot <-
+    data.frame(
+      A = rep(c("foo", "bar"), each = 4),
+      B = 1:8,
+      C = 11:18,
+      Bunit = "mg",
+      Cunit = "km"
+    )
+  all_plots <-
+    ggtibble(
+      d_plot,
+      ggplot2::aes(x = B, y = C),
+      outercols = c("A", "Bunit", "Cunit"),
+      caption = "All the {A}",
+      labs = list(x = "B ({Bunit})", y = "C ({Cunit})")
+    ) +
+    ggplot2::geom_point() +
+    ggplot2::geom_line()
+
+  expect_error(
+    knit_print(all_plots, filename = file.path(tempdir(), "foo.svg")),
+    regexp = "`filename` must be NULL, the same length as `x`, or an sprintf format"
+  )
+
+  # Write manually-named files
+  output_file <- file.path(tempdir(), paste0("test_knit_print_", c("a", "b"), ".svg"))
+  # Ensure that the files do not exist before the test
+  found_files <- list.files(path = tempdir(), pattern = "^test_knit_print_[ab]\\.svg$", full.names = TRUE)
+  expect_length(found_files, 0)
+  # Write the output, find the files, ensure that the files are remvoed after
+  # testing, and test that they exist
+  knit_print(all_plots, filename = output_file)
+  found_files <- list.files(path = tempdir(), pattern = "^test_knit_print_[ab]\\.svg$", full.names = TRUE)
+  withr::defer(unlink(found_files))
+  expect_equal(file.exists(found_files), rep(TRUE, 2))
+
+  # Write files with a pattern
+  output_file <- file.path(tempdir(), "test_knit_print_%d.svg")
+  # Ensure that the files do not exist before the test
+  found_files <- list.files(path = tempdir(), pattern = "^test_knit_print_[0-9]+\\.svg$", full.names = TRUE)
+  expect_length(found_files, 0)
+  # Write the output, find the files, ensure that the files are remvoed after
+  # testing, and test that they exist
+  knit_print(all_plots, filename = output_file)
+  found_files <- list.files(path = tempdir(), pattern = "^test_knit_print_[0-9]+\\.svg$", full.names = TRUE)
+  withr::defer(unlink(found_files))
+  expect_equal(file.exists(found_files), rep(TRUE, 2))
+
+  withr::deferred_clear()
+})

@@ -47,7 +47,6 @@ ggtibble <- function(data, ...) {
 #'   ggplot2::geom_point() +
 #'   ggplot2::geom_line()
 #' knit_print(all_plots)
-#'
 #' @export
 ggtibble.data.frame <- function(data, mapping = ggplot2::aes(), ..., outercols = group_vars(data), labs = list(), caption = "") {
   if (!tibble::is_tibble(data)) {
@@ -63,6 +62,7 @@ ggtibble.data.frame <- function(data, mapping = ggplot2::aes(), ..., outercols =
   d_plot
 }
 
+#' @describeIn knit_print.gglist Print the plots in a `ggtibble` object
 #' @export
 knit_print.ggtibble <- function(x, ...) {
   knit_print(x$figure, ...)

@@ -104,6 +104,14 @@ knitr::knit_print
 
 #' Print a list of plots made by gglist
 #'
+#' The `filename` argument may be given with an `sprintf()` format including
+#' "%d" to allow automatic numbering of the output filenames.  Specifically, the
+#' pattern of "%d" with an optional non-negative integer between the "%" and "d"
+#' is searched for and if found, then the filename will be generated using that
+#' `sprintf()` format.  Note that also means that other requirements for
+#' `sprintf()` must be met; for example, if you want a percent sign ("%") in the
+#' filename, it must be doubled so that sprintf returns what is desired.
+#'
 #' @param x The gglist object
 #' @param ... extra arguments to `knit_print()`
 #' @param filename A filename with an optional "%d" sprintf pattern for saving
@@ -124,11 +132,13 @@ knitr::knit_print
 #' @export
 knit_print.gglist <- function(x, ..., filename = NULL, fig_suffix = "\n\n") {
   if (!is.null(filename)) {
-    if (grepl(x = filename, pattern = "%[0-9]*d")) {
+    if (length(filename) == length(x)) {
+      # do nothing
+    } else if (length(filename) == 1 && grepl(x = filename, pattern = "%[0-9]*d")) {
       filename <- sprintf(filename, seq_along(x))
     }
   }
-  stopifnot(`\`filename\` must be either NULL or the same length as \`x\`` = is.null(filename) |
+  stopifnot("`filename` must be NULL, the same length as `x`, or an sprintf format" = is.null(filename) |
     length(filename) == length(x))
   lapply(X = seq_along(x), FUN = function(idx) {
     knitr::knit_print(x = x[[idx]], ..., filename = filename[[idx]], fig_suffix = fig_suffix)

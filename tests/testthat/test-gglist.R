@@ -94,3 +94,12 @@ test_that("new_gglist errors", {
     fixed = TRUE
   )
 })
+
+# knit_print.gg ####
+
+test_that("knit_print.gg", {
+  p <- ggplot2::ggplot()
+  expect_output(knit_print(p), "\n\n\n")
+  expect_output(knit_print(p, fig_prefix = "prefix"), "prefix")
+  expect_output(knit_print(p, fig_suffix = "suffix"), "suffix")
+})
