@@ -88,31 +88,31 @@ test_that("knit_print.ggtibble", {
     ggplot2::geom_line()
 
   expect_error(
-    knit_print(all_plots, filename = file.path(tempdir(), "foo.svg")),
+    knit_print(all_plots, filename = file.path(tempdir(), "foo.png")),
     regexp = "`filename` must be NULL, the same length as `x`, or an sprintf format"
   )
 
   # Write manually-named files
-  output_file <- file.path(tempdir(), paste0("test_knit_print_", c("a", "b"), ".svg"))
+  output_file <- file.path(tempdir(), paste0("test_knit_print_", c("a", "b"), ".png"))
   # Ensure that the files do not exist before the test
-  found_files <- list.files(path = tempdir(), pattern = "^test_knit_print_[ab]\\.svg$", full.names = TRUE)
+  found_files <- list.files(path = tempdir(), pattern = "^test_knit_print_[ab]\\.png$", full.names = TRUE)
   expect_length(found_files, 0)
   # Write the output, find the files, ensure that the files are remvoed after
   # testing, and test that they exist
   knit_print(all_plots, filename = output_file)
-  found_files <- list.files(path = tempdir(), pattern = "^test_knit_print_[ab]\\.svg$", full.names = TRUE)
+  found_files <- list.files(path = tempdir(), pattern = "^test_knit_print_[ab]\\.png$", full.names = TRUE)
   withr::defer(unlink(found_files))
   expect_equal(file.exists(found_files), rep(TRUE, 2))
 
   # Write files with a pattern
-  output_file <- file.path(tempdir(), "test_knit_print_%d.svg")
+  output_file <- file.path(tempdir(), "test_knit_print_%d.png")
   # Ensure that the files do not exist before the test
-  found_files <- list.files(path = tempdir(), pattern = "^test_knit_print_[0-9]+\\.svg$", full.names = TRUE)
+  found_files <- list.files(path = tempdir(), pattern = "^test_knit_print_[0-9]+\\.png$", full.names = TRUE)
   expect_length(found_files, 0)
   # Write the output, find the files, ensure that the files are remvoed after
   # testing, and test that they exist
   knit_print(all_plots, filename = output_file)
-  found_files <- list.files(path = tempdir(), pattern = "^test_knit_print_[0-9]+\\.svg$", full.names = TRUE)
+  found_files <- list.files(path = tempdir(), pattern = "^test_knit_print_[0-9]+\\.png$", full.names = TRUE)
   withr::defer(unlink(found_files))
   expect_equal(file.exists(found_files), rep(TRUE, 2))
 
