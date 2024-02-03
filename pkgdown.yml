@@ -2,7 +2,7 @@ pandoc: 2.19.2
 pkgdown: 2.0.7
 pkgdown_sha: ~
 articles: {}
-last_built: 2024-02-03T11:08Z
+last_built: 2024-02-03T11:12Z
 urls:
   reference: https://billdenney.github.io/ggtibble/reference
   article: https://billdenney.github.io/ggtibble/articles
