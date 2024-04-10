@@ -46,6 +46,10 @@ test_that("ggtibble", {
   expect_named(v4$figure[[1]]$labels, "x")
   expect_equal(
     v4$figure[[1]]$labels$x,
+    "A is 1"
+  )
+  expect_equal(
+    v4$figure[[2]]$labels$x,
     "A is 2"
   )
   expect_equal(v4$caption, rep("", 2))
