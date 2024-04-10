@@ -57,7 +57,12 @@ ggtibble.data.frame <- function(data, mapping = ggplot2::aes(), ..., outercols =
   d_plot$caption <- glue::glue_data(d_plot, caption)
   class(d_plot) <- c("ggtibble", class(d_plot))
   if (length(labs) > 0) {
-    d_plot$figure <- d_plot$figure + do.call(what = labs_glue, append(list(p = d_plot), labs))
+    d_plot$figure <-
+      d_plot$figure +
+      # Convert to a gglist so that the values will be added element-wise
+      new_gglist(do.call(
+        what = labs_glue, append(list(p = d_plot), labs)
+      ))
   }
   d_plot
 }
