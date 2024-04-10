@@ -18,3 +18,8 @@ Create a new \code{gglist} object
 \examples{
 new_gglist(list(NULL, ggplot2::ggplot(data = data.frame())))
 }
+\seealso{
+Other New ggtibble objects: 
+\code{\link{new_ggtibble}()}
+}
+\concept{New ggtibble objects}
