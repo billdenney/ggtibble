@@ -2,4 +2,5 @@
 
 * Labels created with the `labs` argument to `ggtibble()` will not longer all be
   the same (#3)
-* `new_gglist()` is now exported making it easier to create a gglist object
+* `new_gglist()` and `new_ggtibble()` are now exported making it easier to
+  create objects.

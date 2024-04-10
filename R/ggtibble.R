@@ -74,12 +74,14 @@ ggtibble.data.frame <- function(data, mapping = ggplot2::aes(), ..., outercols =
 #' @returns The object with a ggtibble class
 #' @family New ggtibble objects
 #' @examples
-#' new_ggtibble(list(NULL, ggplot2::ggplot(data = data.frame())))
+#' new_ggtibble(tibble::tibble(figure = list(ggplot2::ggplot()), caption = ""))
 #' @export
 new_ggtibble <- function(x) {
   stopifnot(is.data.frame(x))
   stopifnot(c("figure", "caption") %in% names(x))
-  stopifnot(inherits(x$figure, "gglist"))
+  if (!inherits(x$figure, "gglist")) {
+    x$figure <- new_gglist(x$figure)
+  }
   class(x) <- unique(c("ggtibble", class(x)))
   x
 }
