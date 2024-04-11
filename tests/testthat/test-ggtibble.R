@@ -141,3 +141,10 @@ test_that("labels are not always the same (#3)", {
 
   expect_true(fig1$labels$x != fig2$labels$x)
 })
+
+test_that("new_ggtibble() works", {
+  expect_s3_class(
+    new_ggtibble(tibble::tibble(figure = list(ggplot2::ggplot()), caption = "")),
+    "ggtibble"
+  )
+})

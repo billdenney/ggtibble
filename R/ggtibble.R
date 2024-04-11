@@ -55,7 +55,7 @@ ggtibble.data.frame <- function(data, mapping = ggplot2::aes(), ..., outercols =
   d_plot <- tidyr::nest(.data = data, data_plot = !tidyr::all_of(outercols))
   d_plot$figure <- gglist(data = d_plot$data_plot, mapping = mapping, ...)
   d_plot$caption <- glue::glue_data(d_plot, caption)
-  class(d_plot) <- c("ggtibble", class(d_plot))
+  d_plot <- new_ggtibble(d_plot)
   if (length(labs) > 0) {
     d_plot$figure <-
       d_plot$figure +
@@ -65,6 +65,25 @@ ggtibble.data.frame <- function(data, mapping = ggplot2::aes(), ..., outercols =
       ))
   }
   d_plot
+}
+
+#' Create a new `ggtibble` object
+#'
+#' @param x A data.frame with a column named "figure" and "caption", and where
+#'   the "figure" column is a ggtibble.
+#' @returns The object with a ggtibble class
+#' @family New ggtibble objects
+#' @examples
+#' new_ggtibble(tibble::tibble(figure = list(ggplot2::ggplot()), caption = ""))
+#' @export
+new_ggtibble <- function(x) {
+  stopifnot(is.data.frame(x))
+  stopifnot(c("figure", "caption") %in% names(x))
+  if (!inherits(x$figure, "gglist")) {
+    x$figure <- new_gglist(x$figure)
+  }
+  class(x) <- unique(c("ggtibble", class(x)))
+  x
 }
 
 #' @describeIn knit_print.gglist Print the plots in a `ggtibble` object
