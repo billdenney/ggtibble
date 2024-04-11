@@ -17,7 +17,7 @@ The object with a ggtibble class
 Create a new \code{ggtibble} object
 }
 \examples{
-new_ggtibble(list(NULL, ggplot2::ggplot(data = data.frame())))
+new_ggtibble(tibble::tibble(figure = list(ggplot2::ggplot()), caption = ""))
 }
 \seealso{
 Other New ggtibble objects: 
