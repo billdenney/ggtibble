@@ -99,12 +99,10 @@ vec_arith.gglist.gg <- function(op, x, y, ...) {
 }
 #' @export
 #' @method vec_arith.gglist labels
-vec_arith.gglist.labels <- function(op, x, y, ...) {
-  stopifnot(op == "+")
-  new_gglist(
-    lapply(FUN = "+", X = x, y, ...)
-  )
-}
+vec_arith.gglist.labels <- vec_arith.gglist.gg
+#' @export
+#' @method vec_arith.gglist guides
+vec_arith.gglist.guides <- vec_arith.gglist.gg
 
 #' @importFrom knitr knit_print
 #' @export
