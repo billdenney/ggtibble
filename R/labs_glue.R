@@ -15,6 +15,10 @@ labs_glue <- function(p, ...) {
   labs_args <- list()
   for (nm in names(args)) {
     labs_args[[nm]] <- glue::glue_data(p, args[[nm]])
+    if (length(labs_args[[nm]]) == 0) {
+      # handle NULL inputs
+      labs_args[[nm]] <- rep(list(labs_args[[nm]]), nrow(p))
+    }
   }
   purrr::pmap(.l = labs_args, .f = ggplot2::labs)
 }
