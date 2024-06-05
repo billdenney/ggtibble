@@ -65,10 +65,35 @@ test_that("ggtibble", {
     regexp = "Unary operations are not defined for ggtibble objects",
     fixed = TRUE
   )
-  v5 <- v4 + ggplot2::geom_point()
+  v5 <-
+    ggtibble(
+      data.frame(A = 1:2, B = 3:4),
+      ggplot2::aes(x = B, y = B),
+      outercols = "A",
+      labs = list(x = "A is {A}")
+    ) +
+    ggplot2::geom_point()
   expect_equal(nrow(v5), 2)
   expect_equal(v4$figure[[1]]$layers, list())
   expect_s3_class(v5$figure[[1]]$layers[[1]]$geom, "GeomPoint")
+
+  # NULL labels work (#6)
+  v6 <-
+    ggtibble(
+      data.frame(A = 1:2, B = 3:4),
+      ggplot2::aes(x = B, y = B),
+      outercols = "A",
+      labs = list(x = "A is {A}", y = NULL)
+    ) +
+    ggplot2::geom_point()
+  expect_equal(
+    v6$figure[[1]]$labels$x,
+    "A is 1"
+  )
+  expect_equal(
+    v6$figure[[1]]$labels$y,
+    character(0)
+  )
 })
 
 test_that("knit_print.ggtibble", {

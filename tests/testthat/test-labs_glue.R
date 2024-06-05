@@ -22,4 +22,11 @@ test_that("labs_glue", {
       ggplot2::labs(y = "B")
     )
   )
+  expect_equal(
+    labs_glue(d_ggtibble, x = NULL, y = "{A}"),
+    list(
+      ggplot2::labs(x = character(0), y = "A"),
+      ggplot2::labs(x = character(0), y = "B")
+    )
+  )
 })
