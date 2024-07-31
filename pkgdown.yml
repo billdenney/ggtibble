@@ -1,10 +1,9 @@
 pandoc: 3.1.11
-pkgdown: 2.0.9
+pkgdown: 2.1.0
 pkgdown_sha: ~
 articles:
   v01-introduction: v01-introduction.html
-last_built: 2024-06-05T15:01Z
+last_built: 2024-07-31T18:32Z
 urls:
   reference: https://billdenney.github.io/ggtibble/reference
   article: https://billdenney.github.io/ggtibble/articles
-
