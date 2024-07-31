@@ -1,4 +1,4 @@
-# ggtibble 1.0.0.9000
+# ggtibble 1.0.1
 
 * `labs` argument to `ggtibble()` can now include `NULL (#6)
 * `guides()` can now be added to `gglist` objects.
