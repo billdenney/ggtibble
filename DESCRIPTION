@@ -29,6 +29,7 @@ Imports:
     tibble,
     tidyr,
     vctrs
-URL: https://billdenney.github.io/ggtibble/
+URL: https://billdenney.github.io/ggtibble/, https://github.com/billdenney/ggtibble
+BugReports: https://github.com/billdenney/ggtibble/issues
 Language: en-US
 VignetteBuilder: knitr
