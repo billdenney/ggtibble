@@ -3,7 +3,9 @@
 #' @param ... passed to `glue()`
 #' @returns A character vector of expressions to be evaluated
 #' @examples
+#' \dontrun{
 #' extract_glue_expr("foo {character(0)} {bar}")
+#' }
 extract_glue_expr <- function(...) {
   ret <- character(0)
   expr_capture <- function(text, envir) {

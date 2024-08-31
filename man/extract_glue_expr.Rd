@@ -16,5 +16,7 @@ A character vector of expressions to be evaluated
 Extract all expressions to be evaluated by \code{glue()}
 }
 \examples{
+\dontrun{
 extract_glue_expr("foo {character(0)} {bar}")
+}
 }
