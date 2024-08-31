@@ -7,7 +7,7 @@ test_that("ggtibble", {
   expect_equal(v1$caption, "")
 
   # Test length >1
-  v2 <- ggtibble(data.frame(A = 1:2, B = 3:4), outercols = "A")
+  v2 <- ggtibble(data.frame(A = 1:2, B = 3:4), outercols = "A", labs = list(x = "{A}"))
   expect_named(v2, expected = c("A", "data_plot", "figure", "caption"))
   expect_length(v2$figure, 2)
   expect_equal(
@@ -175,5 +175,23 @@ test_that("new_ggtibble() works", {
   expect_s3_class(
     new_ggtibble(tibble::tibble(figure = list(ggplot2::ggplot()), caption = "")),
     "ggtibble"
+  )
+})
+
+test_that("Check that all `outercols` are used either in the `caption` or the `labs` (#13)", {
+  d_plot <-
+    data.frame(
+      A = c("A", "B"),
+      B = c("C", "D"),
+      x = 1,
+      y = 1
+    )
+  expect_silent(
+    ggtibble(d_plot, ggplot2::aes(x = x, y = y), outercols = c("A", "B"), labs = list(x = "{A} {B}"))
+  )
+  expect_warning(
+    ggtibble(d_plot, ggplot2::aes(x = x, y = y), outercols = c("A", "B"), labs = list(x = "{A}")),
+    regexp = "The following `outercols` are not used in `caption` or `labs`: `B`",
+    fixed = TRUE
   )
 })
