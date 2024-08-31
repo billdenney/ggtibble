@@ -54,6 +54,21 @@ ggtibble.data.frame <- function(data, mapping = ggplot2::aes(), ..., outercols =
   }
   d_plot <- tidyr::nest(.data = data, data_plot = !tidyr::all_of(outercols))
   d_plot$figure <- gglist(data = d_plot$data_plot, mapping = mapping, ...)
+
+  # Check that all `outercols` are used either in the `caption` or the `labs`
+  # Extract all expressions used in arguments that will be glued
+  glued_expr <-
+    unlist(lapply(
+      X = append(labs, list(caption)), FUN = extract_glue_expr
+    ))
+  unused_outercols <- unique(setdiff(outercols, glued_expr))
+  if (length(unused_outercols) > 0) {
+    warning(
+      "The following `outercols` are not used in `caption` or `labs`: ",
+      paste0("`", unused_outercols, "`", collapse = ", ")
+    )
+  }
+
   d_plot$caption <- glue::glue_data(d_plot, caption)
   d_plot <- new_ggtibble(d_plot)
   if (length(labs) > 0) {

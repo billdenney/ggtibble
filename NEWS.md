@@ -1,3 +1,8 @@
+# ggtibble 1.0.1.9000
+
+* `ggtibble()` now warns if `outercols` are not used in either the `caption` or
+  the `labs` argument (#13).
+
 # ggtibble 1.0.1
 
 * `labs` argument to `ggtibble()` can now include `NULL (#6)

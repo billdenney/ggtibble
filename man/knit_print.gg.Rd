@@ -26,8 +26,11 @@
 
 \item{filename}{A filename saving the plot}
 
-\item{width, height, units}{Plot size in \code{units} ("in", "cm", "mm", or "px").
-If not supplied, uses the size of current graphics device.}
+\item{width, height}{Plot size in units expressed by the \code{units} argument.
+If not supplied, uses the size of the current graphics device.}
+
+\item{units}{One of the following units in which the \code{width} and \code{height}
+arguments are expressed: \code{"in"}, \code{"cm"}, \code{"mm"} or \code{"px"}.}
 }
 \value{
 The gg object, invisibly

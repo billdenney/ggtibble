@@ -7,7 +7,7 @@ test_that("ggtibble", {
   expect_equal(v1$caption, "")
 
   # Test length >1
-  v2 <- ggtibble(data.frame(A = 1:2, B = 3:4), outercols = "A")
+  v2 <- ggtibble(data.frame(A = 1:2, B = 3:4), outercols = "A", labs = list(x = "{A}"))
   expect_named(v2, expected = c("A", "data_plot", "figure", "caption"))
   expect_length(v2$figure, 2)
   expect_equal(
@@ -125,7 +125,9 @@ test_that("knit_print.ggtibble", {
   output_file <- file.path(tempdir(), paste0("test_knit_print_", c("a", "b"), ".png"))
   # Ensure that the files do not exist before the test
   found_files <- list.files(path = tempdir(), pattern = "^test_knit_print_[ab]\\.png$", full.names = TRUE)
-  expect_length(found_files, 0)
+  if (length(found_files) > 0) {
+    unlink(found_files)
+  }
   # Write the output, find the files, ensure that the files are remvoed after
   # testing, and test that they exist
   knit_print(all_plots, filename = output_file)
@@ -137,7 +139,9 @@ test_that("knit_print.ggtibble", {
   output_file <- file.path(tempdir(), "test_knit_print_%d.png")
   # Ensure that the files do not exist before the test
   found_files <- list.files(path = tempdir(), pattern = "^test_knit_print_[0-9]+\\.png$", full.names = TRUE)
-  expect_length(found_files, 0)
+  if (length(found_files) > 0) {
+    unlink(found_files)
+  }
   # Write the output, find the files, ensure that the files are remvoed after
   # testing, and test that they exist
   knit_print(all_plots, filename = output_file)
@@ -171,5 +175,23 @@ test_that("new_ggtibble() works", {
   expect_s3_class(
     new_ggtibble(tibble::tibble(figure = list(ggplot2::ggplot()), caption = "")),
     "ggtibble"
+  )
+})
+
+test_that("Check that all `outercols` are used either in the `caption` or the `labs` (#13)", {
+  d_plot <-
+    data.frame(
+      A = c("A", "B"),
+      B = c("C", "D"),
+      x = 1,
+      y = 1
+    )
+  expect_silent(
+    ggtibble(d_plot, ggplot2::aes(x = x, y = y), outercols = c("A", "B"), labs = list(x = "{A} {B}"))
+  )
+  expect_warning(
+    ggtibble(d_plot, ggplot2::aes(x = x, y = y), outercols = c("A", "B"), labs = list(x = "{A}")),
+    regexp = "The following `outercols` are not used in `caption` or `labs`: `B`",
+    fixed = TRUE
   )
 })
