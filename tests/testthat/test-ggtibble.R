@@ -125,7 +125,9 @@ test_that("knit_print.ggtibble", {
   output_file <- file.path(tempdir(), paste0("test_knit_print_", c("a", "b"), ".png"))
   # Ensure that the files do not exist before the test
   found_files <- list.files(path = tempdir(), pattern = "^test_knit_print_[ab]\\.png$", full.names = TRUE)
-  expect_length(found_files, 0)
+  if (length(found_files) > 0) {
+    unlink(found_files)
+  }
   # Write the output, find the files, ensure that the files are remvoed after
   # testing, and test that they exist
   knit_print(all_plots, filename = output_file)
@@ -137,7 +139,9 @@ test_that("knit_print.ggtibble", {
   output_file <- file.path(tempdir(), "test_knit_print_%d.png")
   # Ensure that the files do not exist before the test
   found_files <- list.files(path = tempdir(), pattern = "^test_knit_print_[0-9]+\\.png$", full.names = TRUE)
-  expect_length(found_files, 0)
+  if (length(found_files) > 0) {
+    unlink(found_files)
+  }
   # Write the output, find the files, ensure that the files are remvoed after
   # testing, and test that they exist
   knit_print(all_plots, filename = output_file)
