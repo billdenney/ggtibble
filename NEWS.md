@@ -3,6 +3,8 @@
 * `ggtibble()` now warns if `outercols` are not used in either the `caption` or
   the `labs` argument (#13).
 * `ggtibble` and `gglist` objects now work with the ggplot2 `%+%` operator (#16)
+* A new `ggsave()` generic function will now enable simpler saving of `ggtibble`
+  and `gglist` objects.
 
 # ggtibble 1.0.1
 

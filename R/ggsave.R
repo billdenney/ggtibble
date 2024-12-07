@@ -1,0 +1,127 @@
+#' Save a plot or list of plots
+#'
+#' @inheritParams ggplot2::ggsave
+#' @export
+ggsave <- function(filename,
+                   plot = last_plot(),
+                   device = NULL,
+                   path = NULL,
+                   scale = 1,
+                   width = NA,
+                   height = NA,
+                   units = c("in", "cm", "mm", "px"),
+                   dpi = 300,
+                   limitsize = TRUE,
+                   bg = NULL,
+                   create.dir = FALSE,
+                   ...) {
+  UseMethod("ggsave", plot)
+}
+
+#' @describeIn ggsave Save the figures in a `gglist` object
+#' @param filename A vector of file names for each `plot`
+#' @export
+ggsave.gglist <- function(filename,
+                          plot,
+                          device = NULL,
+                          path = NULL,
+                          scale = 1,
+                          width = NA,
+                          height = NA,
+                          units = c("in", "cm", "mm", "px"),
+                          dpi = 300,
+                          limitsize = TRUE,
+                          bg = NULL,
+                          create.dir = FALSE,
+                          ...) {
+  stopifnot(length(filename) == length(plot))
+  ret <-
+    vapply(
+      X = seq_along(plot),
+      FUN = \(idx) {
+        ggplot2::ggsave(
+          filename = filename[[idx]],
+          plot = plot[[idx]],
+          device = device,
+          path = path,
+          scale = scale,
+          width = width,
+          height = height,
+          units = units,
+          dpi = dpi,
+          limitsize = limitsize,
+          bg = bg,
+          create.dir = create.dir,
+          ...
+        )
+      },
+      FUN.VALUE = ""
+    )
+  invisible(ret)
+}
+
+#' @describeIn ggsave Save the figures in a `ggtibble` object
+#' @param filename A character string passed to `glue::glue_data()` to generate
+#'   file names for each row in `plot`.
+#' @export
+ggsave.ggtibble <- function(filename,
+                            plot,
+                            device = NULL,
+                            path = NULL,
+                            scale = 1,
+                            width = NA,
+                            height = NA,
+                            units = c("in", "cm", "mm", "px"),
+                            dpi = 300,
+                            limitsize = TRUE,
+                            bg = NULL,
+                            create.dir = FALSE,
+                            ...) {
+  filenames <- glue::glue_data(plot, filename)
+  ggsave(
+    filename = filenames,
+    plot = plot$figure,
+    device = device,
+    path = path,
+    scale = scale,
+    width = width,
+    height = height,
+    units = units,
+    dpi = dpi,
+    limitsize = limitsize,
+    bg = bg,
+    create.dir = create.dir,
+    ...
+  )
+}
+
+#' @export
+ggsave.default <- function(filename,
+                           plot = last_plot(),
+                           device = NULL,
+                           path = NULL,
+                           scale = 1,
+                           width = NA,
+                           height = NA,
+                           units = c("in", "cm", "mm", "px"),
+                           dpi = 300,
+                           limitsize = TRUE,
+                           bg = NULL,
+                           create.dir = FALSE,
+                           ...) {
+  ggplot2::ggsave(
+    filename = filename,
+    plot = plot,
+    device = device,
+    path = path,
+    scale = scale,
+    width = width,
+    height = height,
+    units = units,
+    dpi = dpi,
+    limitsize = limitsize,
+    bg = bg,
+    create.dir = create.dir,
+    ...
+  )
+}
