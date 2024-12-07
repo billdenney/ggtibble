@@ -1,0 +1,23 @@
+---
+title: "Untitled"
+output: pdf_document
+date: "2024-07-31"
+---
+
+```{r setup, include=FALSE}
+chunk_option_ggtibble <- function(options) {
+  if (isTRUE(options$ggtibble)) {
+    browser()
+    stop()
+  }
+}
+
+knitr::opts_chunk$set(echo = TRUE)
+knitr::opts_hooks$set(ggtibble = chunk_option_ggtibble)
+```
+
+```{r pressure, echo=FALSE, ggtibble = TRUE, fig.cap=d_plot$caption}
+d_plot <- data.frame(A = 1)
+d_plot$caption <- "foo"
+plot(pressure)
+```
