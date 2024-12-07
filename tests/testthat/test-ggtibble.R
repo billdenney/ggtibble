@@ -195,3 +195,25 @@ test_that("Check that all `outercols` are used either in the `caption` or the `l
     fixed = TRUE
   )
 })
+
+test_that("%+% works (#16)", {
+  d_plot <-
+    data.frame(
+      A = rep(c("foo", "bar"), each = 4),
+      B = 1:8,
+      C = 11:18,
+      Bunit = "mg",
+      Cunit = "km"
+    )
+  all_plots <-
+    ggtibble(
+      d_plot,
+      ggplot2::aes(x = B, y = C),
+      outercols = c("A", "Bunit", "Cunit"),
+      caption = "All the {A}",
+      labs = list(x = "B ({Bunit})", y = "C ({Cunit})")
+    ) +
+    ggplot2::geom_point() +
+    ggplot2::geom_line()
+  expect_s3_class(all_plots %+% ggplot2::aes(y = B), "ggtibble")
+})
