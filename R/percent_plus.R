@@ -1,3 +1,7 @@
+#' Use the `%+%` operator from `ggplot2` for `ggtibble` and `gglist` objects
+#' @param e1 Either a `ggtibble` or `gglist` object or an object that can use
+#'   the default `ggplot2::%+%` function
+#' @param e2 A plot component (see ?ggplot2::`%+%`)
 #' @export
 `%+%` <- function (e1, e2) {
   UseMethod("%+%")
