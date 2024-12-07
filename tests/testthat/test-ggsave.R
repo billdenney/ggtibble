@@ -17,9 +17,9 @@ test_that("ggsave", {
     ) +
     ggplot2::geom_point() +
     ggplot2::geom_line()
-  expected_files <- file.path(tempdir(), c("foo.svg", "bar.svg"))
+  expected_files <- file.path(tempdir(), c("foo.png", "bar.png"))
   expect_equal(
-    ggsave(filename = "{A}.svg", plot = all_plots, path = tempdir()),
+    ggsave(filename = "{A}.png", plot = all_plots, path = tempdir()),
     expected_files
   )
   unlink(expected_files)
