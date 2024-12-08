@@ -3,7 +3,7 @@ pkgdown: 2.1.1
 pkgdown_sha: ~
 articles:
   v01-introduction: v01-introduction.html
-last_built: 2024-12-07T20:27Z
+last_built: 2024-12-08T17:43Z
 urls:
   reference: https://billdenney.github.io/ggtibble/reference
   article: https://billdenney.github.io/ggtibble/articles
