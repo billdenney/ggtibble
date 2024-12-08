@@ -103,6 +103,9 @@ vec_arith.gglist.labels <- vec_arith.gglist.gg
 #' @export
 #' @method vec_arith.gglist guides
 vec_arith.gglist.guides <- vec_arith.gglist.gg
+#' @export
+#' @method vec_arith.gglist uneval
+vec_arith.gglist.uneval <- vec_arith.gglist.gg # aes()
 
 #' @importFrom knitr knit_print
 #' @export
