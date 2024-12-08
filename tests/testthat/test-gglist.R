@@ -26,6 +26,16 @@ test_that("vec_arith for gglists", {
     g1 + ggplot2::guides(colour = ggplot2::guide_legend(ncol = 1)),
     "gglist"
   )
+  # add an aes object to a single gglist
+  expect_s3_class(
+    g1 + ggplot2::aes(x = 1),
+    "gglist"
+  )
+  # add a data.frame to a single gglist
+  expect_s3_class(
+    g1 + data.frame(A = 1),
+    "gglist"
+  )
   # add a list of items to a single gglist
   expect_s3_class(
     g1 + list(ggplot2::labs(x = "foo")),

@@ -5,6 +5,8 @@
 * `ggtibble` and `gglist` objects now work with the ggplot2 `%+%` operator (#16)
 * A new `ggsave()` generic function will now enable simpler saving of `ggtibble`
   and `gglist` objects (unique filenames are required to save).
+* `aes()` and `data.frame()` objects can be added to `ggtibble` and `gglist`
+  objects (#23).
 
 # ggtibble 1.0.1
 

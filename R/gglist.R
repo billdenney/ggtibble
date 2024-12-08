@@ -58,7 +58,11 @@ print.gglist <- function(x, ...) {
 
 #' @export
 chooseOpsMethod.gglist <- function(x, y, mx, my, cl, reverse) {
-  inherits(y, "gg") | inherits(y, "labels") | inherits(y, "list")
+  inherits(y, "gg") |
+    inherits(y, "labels") |
+    inherits(y, "list") |
+    inherits(y, "uneval") |
+    inherits(y, "data.frame")
 }
 
 #' @export
@@ -103,6 +107,17 @@ vec_arith.gglist.labels <- vec_arith.gglist.gg
 #' @export
 #' @method vec_arith.gglist guides
 vec_arith.gglist.guides <- vec_arith.gglist.gg
+#' @export
+#' @method vec_arith.gglist uneval
+vec_arith.gglist.uneval <- vec_arith.gglist.gg # aes()
+#' @export
+#' @method vec_arith.gglist data.frame
+vec_arith.gglist.data.frame <-  function(op, x, y, ...) {
+  stopifnot(op == "+")
+  new_gglist(
+    lapply(FUN = "%+%", X = x, y, ...)
+  )
+}
 
 #' @importFrom knitr knit_print
 #' @export
