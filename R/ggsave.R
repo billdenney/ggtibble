@@ -19,7 +19,7 @@ ggsave <- function(filename,
 }
 
 #' @describeIn ggsave Save the figures in a `gglist` object
-#' @param filename A vector of file names for each `plot`
+#' @param filename A vector of unique file names for each `plot`
 #' @export
 ggsave.gglist <- function(filename,
                           plot,
@@ -34,7 +34,11 @@ ggsave.gglist <- function(filename,
                           bg = NULL,
                           create.dir = FALSE,
                           ...) {
-  stopifnot(length(filename) == length(plot))
+  if (length(filename) != length(plot)) {
+    stop("There must be one `filename` per `plot`")
+  } else if (any(duplicated(filename))) {
+    stop("Each `filename` must be unique")
+  }
   ret <-
     vapply(
       X = seq_along(plot),
