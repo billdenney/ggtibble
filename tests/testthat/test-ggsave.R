@@ -23,4 +23,17 @@ test_that("ggsave", {
     expected_files
   )
   unlink(expected_files)
+
+  # Enough filenames must be given
+  expect_error(
+    ggsave(filename = "a.png", plot = all_plots$figure, path = tempdir()),
+    regexp = "There must be one `filename` per `plot`",
+    fixed = TRUE
+  )
+  # Filenames must be unique (don't accidentally overwrite anything)
+  expect_error(
+    ggsave(filename = "{Bunit}.png", plot = all_plots, path = tempdir()),
+    regexp = "Each `filename` must be unique",
+    fixed = TRUE
+  )
 })

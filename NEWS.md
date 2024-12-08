@@ -4,7 +4,7 @@
   the `labs` argument (#13).
 * `ggtibble` and `gglist` objects now work with the ggplot2 `%+%` operator (#16)
 * A new `ggsave()` generic function will now enable simpler saving of `ggtibble`
-  and `gglist` objects.
+  and `gglist` objects (unique filenames are required to save).
 
 # ggtibble 1.0.1
 
