@@ -107,7 +107,7 @@ ggsave.ggtibble <- function(filename,
 
 #' @export
 ggsave.default <- function(filename,
-                           plot = last_plot(),
+                           plot = ggplot2::last_plot(),
                            device = NULL,
                            path = NULL,
                            scale = 1,
