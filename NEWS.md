@@ -7,6 +7,8 @@
   and `gglist` objects (unique filenames are required to save).
 * `aes()` and `data.frame()` objects can be added to `ggtibble` and `gglist`
   objects (#23).
+* `ggsave()` can accept a character vector of all filenames to use when saving
+  (#25).
 
 # ggtibble 1.0.1
 

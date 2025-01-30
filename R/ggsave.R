@@ -81,7 +81,13 @@ ggsave.ggtibble <- function(filename,
                             bg = NULL,
                             create.dir = FALSE,
                             ...) {
-  filenames <- glue::glue_data(plot, filename)
+  checkmate::assert_character(filename, min.len = 1, max.len = nrow(plot), any.missing = FALSE, null.ok = FALSE)
+  checkmate::assert_choice(length(filename), choices = c(1, nrow(plot)), null.ok = FALSE)
+  if (length(filename) == nrow(plot)) {
+    filenames <- filename
+  } else {
+    filenames <- glue::glue_data(plot, filename)
+  }
   ggsave(
     filename = filenames,
     plot = plot$figure,
@@ -101,7 +107,7 @@ ggsave.ggtibble <- function(filename,
 
 #' @export
 ggsave.default <- function(filename,
-                           plot = last_plot(),
+                           plot = ggplot2::last_plot(),
                            device = NULL,
                            path = NULL,
                            scale = 1,
